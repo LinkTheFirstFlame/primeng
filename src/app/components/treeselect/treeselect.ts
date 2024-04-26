@@ -126,7 +126,7 @@ export const TREESELECT_VALUE_ACCESSOR: any = {
                             <div class="p-treeselect-filter-container">
                                 <input
                                     #filter
-                                    type="text"
+                                    type="search"
                                     autocomplete="off"
                                     class="p-treeselect-filter p-inputtext p-component"
                                     [attr.placeholder]="filterPlaceholder"
@@ -453,7 +453,7 @@ export class TreeSelect implements AfterContentInit {
      * Callback to invoke when data is filtered.
      * @group Emits
      */
-    @Output() onFilter: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onFilter: EventEmitter<TreeFilterEvent> = new EventEmitter<TreeFilterEvent>();
     /**
      * Callback to invoke when a node is unselected.
      * @param {TreeNodeUnSelectEvent} event - node unselect event.
@@ -699,7 +699,7 @@ export class TreeSelect implements AfterContentInit {
         this.filterValue = (event.target as HTMLInputElement).value;
         this.treeViewChild?._filter(this.filterValue);
         this.onFilter.emit({
-            originalEvent: event,
+            filter: filterValue,
             filteredValue: this.treeViewChild?.filteredNodes
         });
         setTimeout(() => {
